@@ -6,6 +6,8 @@
       <module name="IdeaProjects-test_test" target="1.8" />
       <module name="test_main" target="1.8" />
       <module name="test_test" target="1.8" />
+      <module name="WS_main" target="1.8" />
+      <module name="WS_test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
