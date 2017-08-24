@@ -1,0 +1,16 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  org.springframework.boot.autoconfigure.aop.AopAutoConfiguration,\
+  org.springframework.boot.autoconfigure.MessageSourceAutoConfiguration,\
+  org.springframework.boot.autoconfigure.PropertyPlaceholderAutoConfiguration,\
+  org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration,\
+  org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration,\
+  org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration,\
+  org.springframework.boot.autoconfigure.jdbc.JndiDataSourceAutoConfiguration,\
+  org.springframework.boot.autoconfigure.jdbc.XADataSourceAutoConfiguration,\
+  org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration,\
+  org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration,\
+  org.springframework.boot.autoconfigure.security.SecurityFilterAutoConfiguration,\
+  org.springframework.boot.autoconfigure.web.DispatcherServletAutoConfiguration,\
+  org.springframework.boot.autoconfigure.web.EmbeddedServletContainerAutoConfiguration,\
+  org.springframework.boot.autoconfigure.web.ErrorMvcAutoConfiguration,\
+  org.springframework.boot.autoconfigure.web.ServerProperties
