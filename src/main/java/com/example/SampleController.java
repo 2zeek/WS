@@ -1,5 +1,8 @@
 package com.example;
 
+import com.example.dao.SomeDataDao;
+import com.example.dao.impl.SomeDataDaoImpl;
+import com.example.model.SomeData;
 import com.example.quote.Quote;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -22,7 +25,7 @@ import java.util.logging.Logger;
 public class SampleController {
 
     @Autowired
-    JdbcTemplate jdbcTemplate;
+    SomeDataDao someDataDao;
 
     static final Logger LOG = Logger.getLogger(SampleController.class + "_" + Thread.currentThread().getName());
 
@@ -67,16 +70,14 @@ public class SampleController {
     @RequestMapping("/setData")
     @ResponseBody
     String setData(@RequestParam String data) {
-        jdbcTemplate.update("INSERT INTO DATA(ID, DATA) VALUES (nextval('data_id_seq'),?)", data);
+        someDataDao.insert(new SomeData(data));
         return "Success";
     }
 
     @RequestMapping("/getData")
     @ResponseBody
-    String getData(@RequestParam String id) {
-        return jdbcTemplate.query("select id, data from data where id = ?", new Object[] {Integer.parseInt(id)},
-                (rs, rowNum) -> new Data(rs.getInt("id"), rs.getString("data"))
-        ).get(0).toString();
+    String getData(@RequestParam Long id) {
+        return someDataDao.findById(id).getData();
     }
 
     public static void main(String[] args) throws Exception {
