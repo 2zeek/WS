@@ -66,8 +66,8 @@ public class SampleController {
 
     @RequestMapping("/setData")
     @ResponseBody
-    String setData(@RequestParam String request) {
-        jdbcTemplate.update("INSERT INTO DATA(ID, DATA) VALUES (nextval('data_id_seq'),?)", request);
+    String setData(@RequestParam String data) {
+        jdbcTemplate.update("INSERT INTO DATA(ID, DATA) VALUES (nextval('data_id_seq'),?)", data);
         return "Success";
     }
 

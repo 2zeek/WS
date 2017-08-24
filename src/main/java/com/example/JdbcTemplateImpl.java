@@ -15,7 +15,6 @@ import org.springframework.stereotype.Component;
 public class JdbcTemplateImpl {
      private final JdbcTemplate jdbcTemplate;
 
-    @Autowired
     public JdbcTemplateImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
