@@ -25,9 +25,6 @@ import java.util.logging.Logger;
 @SpringBootApplication
 public class SampleController {
 
-    @Autowired
-    SomeDataDao someDataDao;
-
     static final Logger LOG = Logger.getLogger(SampleController.class + "_" + Thread.currentThread().getName());
 
     @RequestMapping("/")
@@ -46,6 +43,12 @@ public class SampleController {
     @ResponseBody
     String date() {
         return new Date().toString();
+    }
+
+    @RequestMapping("/getDate")
+    @ResponseBody
+    String getDate() {
+        return new RestClient().get("date");
     }
 
     @RequestMapping("/hello")
@@ -67,6 +70,9 @@ public class SampleController {
         Quote quote = restTemplate.getForObject("http://gturnquist-quoters.cfapps.io/api/random", Quote.class);
         return  quote.toString();
     }
+
+    @Autowired
+    SomeDataDao someDataDao;
 
     @RequestMapping("/setData")
     @ResponseBody

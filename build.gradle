@@ -15,13 +15,11 @@ dependencies {
     compile "org.springframework.boot:spring-boot-starter-jdbc:1.5.6.RELEASE"
     compile 'org.postgresql:postgresql:42.1.4'
     compile "org.springframework:spring-jdbc"
-    compile "javax.mail:javax.mail-api:1.6.0"
-    compile "javax.activation:activation:1.1.1"
-    compile group: 'wsdl4j', name: 'wsdl4j', version: '1.6.2'
-    compile group: 'org.apache.axis', name: 'axis-jaxrpc', version: '1.4'
-    compile group: 'org.apache.axis', name: 'axis', version: '1.4'
-    compile group: 'commons-discovery', name: 'commons-discovery', version: '0.5'
-    compile group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-xml', version: '2.9.0'
+    compile 'wsdl4j:wsdl4j:1.6.2'
+    compile 'org.apache.axis:axis-jaxrpc:1.4'
+    compile 'org.apache.axis:axis:1.4'
+    compile 'commons-discovery:commons-discovery:0.5'
+    compile 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.9.0'
 }
 
 jar {
