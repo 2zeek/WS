@@ -2,7 +2,7 @@ package com.example;
 
 import com.example.dao.SomeDataDao;
 import com.example.model.SomeData;
-import com.example.quote.Quote;
+import com.example.model.Quote;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
