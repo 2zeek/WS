@@ -7,8 +7,8 @@ public class SomeData {
 
     public static final String TABLE_NAME = "some_data";
     public static final String ID_COLUMN = "id";
-    public static final String ID_SEQ = "data_id_seq";
     public static final String DATA_COLUMN = "data";
+    public static final String ID_SEQ = "data_id_seq";
 
     private Long id;
     private String data;
