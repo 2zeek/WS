@@ -7,15 +7,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.sql.DataSource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import com.example.dao.SomeDataDao;
 import com.example.model.SomeData;
-
 
 /**
  * Created by Nikolay V. Petrov on 24.08.2017.

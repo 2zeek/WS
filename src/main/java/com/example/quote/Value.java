@@ -2,6 +2,10 @@ package com.example.quote;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+/**
+ * Created by Nikolay V. Petrov on 24.08.2017.
+ */
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Value {
 

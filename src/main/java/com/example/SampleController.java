@@ -14,11 +14,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.jdbc.core.JdbcTemplate;
-
 import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Logger;
+
+/**
+ * Created by Nikolay V. Petrov on 24.08.2017.
+ */
 
 @Controller
 @SpringBootApplication

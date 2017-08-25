@@ -7,6 +7,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+/**
+ * Created by Nikolay V. Petrov on 24.08.2017.
+ */
+
 public class RestClient {
 
     private String server = "http://localhost:8080";
