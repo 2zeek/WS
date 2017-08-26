@@ -20,8 +20,12 @@ import com.example.model.SomeData;
 @Component
 public class SomeDataDaoImpl implements SomeDataDao {
 
-    @Autowired
     private DataSource dataSource;
+
+    @Autowired
+    public SomeDataDaoImpl(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     public List<SomeData> findAll() {
         List<SomeData> result = new ArrayList<SomeData>();
