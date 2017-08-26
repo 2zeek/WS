@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import com.example.dao.SomeDataDao;
 import com.example.model.SomeData;
@@ -23,7 +24,7 @@ public class SomeDataDaoImpl implements SomeDataDao {
     private DataSource dataSource;
 
     @Autowired
-    public SomeDataDaoImpl(DataSource dataSource) {
+    public SomeDataDaoImpl(@Qualifier("dataSource") DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
