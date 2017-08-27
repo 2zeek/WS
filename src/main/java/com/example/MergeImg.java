@@ -17,10 +17,8 @@ public class MergeImg {
         File path = new File(System.getProperty("user.dir") + "\\upload-dir");
 
         // load source images
-        LOG.info(path.toString());
-
-        BufferedImage overlay = ImageIO.read(new File(path, "6.jpg"));
-        BufferedImage image = ImageIO.read(new File(path, "5.jpg"));
+        BufferedImage overlay = ImageIO.read(new File(path, "overlay.jpg"));
+        BufferedImage image = ImageIO.read(new File(path, "image.jpg"));
 
         // create the new image, canvas size is the max. of both image sizes
         int w = Math.max(image.getWidth(), overlay.getWidth());
