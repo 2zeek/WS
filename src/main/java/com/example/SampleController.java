@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
@@ -94,10 +95,11 @@ public class SampleController {
         return someDataDao.findById(id).getData();
     }
 
-    @RequestMapping("/imgUp")
+    @RequestMapping("/mergeImgs")
     @ResponseBody
-    String imgUp(@RequestParam String pathToImg) {
-        return "som";
+    String mergeImgs(@RequestParam Map<String,String> request) throws IOException {
+        MergeImg.merge();
+        return "Success";
     }
 
     public static void main(String[] args) throws Exception {
@@ -107,7 +109,7 @@ public class SampleController {
     @Bean
     CommandLineRunner init(StorageService storageService) {
         return (args) -> {
-            storageService.deleteAll();
+            //storageService.deleteAll();
             storageService.init();
         };
     }
