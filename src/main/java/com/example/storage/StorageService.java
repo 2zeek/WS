@@ -1,14 +1,13 @@
 package com.example.storage;
 
+import org.springframework.core.io.Resource;
+import org.springframework.web.multipart.MultipartFile;
+import java.nio.file.Path;
+import java.util.stream.Stream;
+
 /**
  * Created by Nikolay V. Petrov on 26.08.2017.
  */
-
-import org.springframework.core.io.Resource;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.nio.file.Path;
-import java.util.stream.Stream;
 
 public interface StorageService {
 

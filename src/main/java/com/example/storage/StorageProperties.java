@@ -1,10 +1,10 @@
 package com.example.storage;
 
+import org.springframework.boot.context.properties.ConfigurationProperties;
+
 /**
  * Created by Nikolay V. Petrov on 27.08.2017.
  */
-
-import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties("storage")
 public class StorageProperties {

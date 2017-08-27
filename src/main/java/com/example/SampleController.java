@@ -5,7 +5,6 @@ import com.example.storage.StorageService;
 import com.example.dao.SomeDataDao;
 import com.example.model.SomeData;
 import com.example.model.Quote;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -18,12 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
-
 import java.io.IOException;
 import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
-import java.util.logging.Logger;
+
 /**
  * Created by Nikolay V. Petrov on 24.08.2017.
  */
@@ -33,7 +31,10 @@ import java.util.logging.Logger;
 @EnableConfigurationProperties(StorageProperties.class)
 public class SampleController {
 
-    static final Logger LOG = Logger.getLogger(SampleController.class + "_" + Thread.currentThread().getName());
+    @Autowired
+    public SampleController(SomeDataDao someDataDao) {
+        this.someDataDao = someDataDao;
+    }
 
     @RequestMapping("/")
     @ResponseBody
@@ -79,8 +80,7 @@ public class SampleController {
         return  quote.toString();
     }
 
-    @Autowired
-    SomeDataDao someDataDao;
+    private final SomeDataDao someDataDao;
 
     @RequestMapping("/setData")
     @ResponseBody
@@ -109,7 +109,7 @@ public class SampleController {
     @Bean
     CommandLineRunner init(StorageService storageService) {
         return (args) -> {
-            //storageService.deleteAll();
+            storageService.deleteAll();
             storageService.init();
         };
     }
