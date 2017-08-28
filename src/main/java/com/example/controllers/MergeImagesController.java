@@ -1,4 +1,11 @@
-package com.example;
+package com.example.controllers;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -6,13 +13,24 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-/**
- * Created by Nikolay V. Petrov on 27.08.2017.
- */
+@RestController
+class MergeImagesController {
 
-class MergeImg {
+    private final FileUploadController fileUploadController;
 
-    static void merge() throws IOException {
+    @Autowired
+    public MergeImagesController(FileUploadController fileUploadController) {
+        this.fileUploadController = fileUploadController;
+    }
+
+    @RequestMapping("/mergeImages")
+    @ResponseBody
+    ResponseEntity<Resource> mergeImagesController() throws IOException {
+        merge();
+        return fileUploadController.serveFile("combined.png");
+    }
+
+    private static void merge() throws IOException {
         File path = new File(System.getProperty("user.dir") + "\\upload-dir");
 
         // load source images

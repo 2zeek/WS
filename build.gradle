@@ -7,7 +7,7 @@ buildscript {
     }
 }
 
-group 'test'
+group 'WS'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
@@ -37,6 +37,6 @@ dependencies {
 jar {
     exclude 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA', 'META-INF/*.MF'
     manifest {
-        attributes 'Main-Class': 'com.example.SampleController'
+        attributes 'Main-Class': 'com.example.Application'
         attributes 'Class-Path': configurations.runtime.files.collect { "lib/$it.name" }.join(' ')    }
 }

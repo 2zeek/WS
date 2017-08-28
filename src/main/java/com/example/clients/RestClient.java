@@ -1,4 +1,4 @@
-package com.example;
+package com.example.clients;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -55,7 +55,7 @@ public class RestClient {
         return status;
     }
 
-    public void setStatus(HttpStatus status) {
+    private void setStatus(HttpStatus status) {
         this.status = status;
     }
 }
