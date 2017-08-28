@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -42,10 +44,17 @@ class MergeImagesController {
         int h = Math.max(background.getHeight(), overlay.getHeight());
         BufferedImage combined = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
 
+        //Поворот изображения на 45 градусов
+        double rotationRequired = Math.toRadians (45);
+        double locationX = overlay.getWidth() / 2;
+        double locationY = overlay.getHeight() / 2;
+        AffineTransform tx = AffineTransform.getRotateInstance(rotationRequired, locationX, locationY);
+        AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
+
         // paint both images, preserving the alpha channels
         Graphics g = combined.getGraphics();
         g.drawImage(background, 0, 0, null);
-        g.drawImage(overlay, 700, 10, null);
+        g.drawImage(op.filter(overlay, null), 700, 10, null);
 
         // Save as new image
         ImageIO.write(combined, "PNG", new File(path, "combined.png"));
