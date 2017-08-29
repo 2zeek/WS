@@ -7,6 +7,7 @@ import java.util.UUID;
 
 @RestController
 public class RandomGeneratorController {
+
     @RequestMapping("/random")
     @ResponseBody
     String random() {

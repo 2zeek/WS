@@ -14,8 +14,16 @@ import com.vk.api.sdk.objects.photos.responses.SaveOwnerPhotoResponse;
 import com.vk.api.sdk.objects.photos.responses.WallUploadResponse;
 import com.vk.api.sdk.objects.wall.responses.GetResponse;
 import com.vk.api.sdk.objects.wall.responses.PostResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -25,10 +33,13 @@ import java.util.Properties;
  * Created by Nikolay V. Petrov on 28.08.2017.
  */
 
+@RestController
 public class VkController {
 
+    private final String NAMESPACE = "vk";
+
     private Integer USER_ID;
-    private VkApiClient vk;
+    private VkApiClient vkApiClient;
     private UserActor actor;
 
     public VkController() {
@@ -42,23 +53,27 @@ public class VkController {
         TransportClient transportClient = HttpTransportClient.getInstance();
         String access_token = String.valueOf(properties.getProperty("access.token"));
         this.USER_ID = Integer.valueOf(properties.getProperty("user.id"));
-        this.vk = new VkApiClient(transportClient);
+        this.vkApiClient = new VkApiClient(transportClient);
         this.actor = new UserActor(USER_ID, access_token);
     }
 
+    @GetMapping(NAMESPACE + "/getWall")
+    @ResponseBody
     public GetResponse getWall() throws ClientException, ApiException {
-        return vk.wall().get(actor)
+        return vkApiClient.wall().get(actor)
                 .ownerId(USER_ID)
                 .count(5)
                 .offset(0)
                 .execute();
     }
 
+    @GetMapping(NAMESPACE + "/publicPhotoOnTheWall")
+    @ResponseBody
     public PostResponse publicPhotoOnTheWall() throws ClientException, ApiException {
-        File file = new File(System.getProperty("user.dir") + "\\upload-dir\\photo_for_upload.jpg");
-        PhotoUpload serverResponse = vk.photos().getWallUploadServer(actor).execute();
-        WallUploadResponse uploadResponse = vk.upload().photoWall(serverResponse.getUploadUrl(), file).execute();
-        List<Photo> photoList = vk.photos().saveWallPhoto(actor, uploadResponse.getPhoto())
+        File file = new File(System.getProperty("user.dir") + "\\upload-dir\\vk\\photo_for_upload.jpg");
+        PhotoUpload serverResponse = vkApiClient.photos().getWallUploadServer(actor).execute();
+        WallUploadResponse uploadResponse = vkApiClient.upload().photoWall(serverResponse.getUploadUrl(), file).execute();
+        List<Photo> photoList = vkApiClient.photos().saveWallPhoto(actor, uploadResponse.getPhoto())
                 .server(uploadResponse.getServer())
                 .hash(uploadResponse.getHash())
                 .execute();
@@ -66,17 +81,19 @@ public class VkController {
         Photo photo = photoList.get(0);
         String attachId = "photo" + photo.getOwnerId() + "_" + photo.getId();
 
-        return vk.wall().post(actor)
+        return vkApiClient.wall().post(actor)
                 .attachments(attachId)
                 .execute();
     }
 
+    @ResponseBody
+    @GetMapping(NAMESPACE + "/publicAvatar")
     public SaveOwnerPhotoResponse publicAvatar() throws ClientException, ApiException {
-        File file = new File(System.getProperty("user.dir") + "\\upload-dir\\photo_for_upload.jpg");
-        GetOwnerPhotoUploadServerResponse serverResponse = vk.photos().getOwnerPhotoUploadServer(actor).execute();
-        WallUploadResponse uploadResponse = vk.upload().photoWall(serverResponse.getUploadUrl(), file).execute();
+        File file = new File(System.getProperty("user.dir") + "\\upload-dir\\vk\\photo_for_upload.jpg");
+        GetOwnerPhotoUploadServerResponse serverResponse = vkApiClient.photos().getOwnerPhotoUploadServer(actor).execute();
+        WallUploadResponse uploadResponse = vkApiClient.upload().photoWall(serverResponse.getUploadUrl(), file).execute();
 
-        return  vk.photos().
+        return  vkApiClient.photos().
                 saveOwnerPhoto(actor)
                 .photo(uploadResponse.getPhoto())
                 .hash(uploadResponse.getHash())
