@@ -8,12 +8,11 @@ import com.vk.api.sdk.client.actors.UserActor;
 import com.vk.api.sdk.exceptions.ApiException;
 import com.vk.api.sdk.exceptions.ClientException;
 import com.vk.api.sdk.httpclient.HttpTransportClient;
+import com.vk.api.sdk.objects.base.Image;
 import com.vk.api.sdk.objects.groups.responses.GetMembersResponse;
 import com.vk.api.sdk.objects.photos.Photo;
 import com.vk.api.sdk.objects.photos.PhotoUpload;
-import com.vk.api.sdk.objects.photos.responses.GetOwnerPhotoUploadServerResponse;
-import com.vk.api.sdk.objects.photos.responses.SaveOwnerPhotoResponse;
-import com.vk.api.sdk.objects.photos.responses.WallUploadResponse;
+import com.vk.api.sdk.objects.photos.responses.*;
 import com.vk.api.sdk.objects.wall.responses.GetResponse;
 import com.vk.api.sdk.objects.wall.responses.PostResponse;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -112,7 +111,7 @@ public class VkController {
     @ResponseBody
     @GetMapping(NAMESPACE + "/setGroupAvatar")
     public SaveOwnerPhotoResponse setGroupAvatar() throws ClientException, ApiException {
-        File file = new File(System.getProperty("user.dir") + "\\upload-dir\\vk\\group\\photo_for_upload.jpg");
+        File file = new File(System.getProperty("user.dir") + "\\upload-dir\\vk\\group\\avatar_for_upload.jpg");
         GetOwnerPhotoUploadServerResponse serverResponse = vkApiClient.photos().getOwnerPhotoUploadServer(userActor).ownerId(0-GROUP_ID).execute();
         WallUploadResponse uploadResponse = vkApiClient.upload().photoWall(serverResponse.getUploadUrl(), file).execute();
 
@@ -121,6 +120,18 @@ public class VkController {
                 .photo(uploadResponse.getPhoto())
                 .hash(uploadResponse.getHash())
                 .server(String.valueOf(uploadResponse.getServer()))
+                .execute();
+    }
+
+    @ResponseBody
+    @GetMapping(NAMESPACE + "/setGroupCover")
+    public PhotosSaveOwnerCoverPhotoResponse setGroupCover() throws ClientException, ApiException {
+        File file = new File(System.getProperty("user.dir") + "\\upload-dir\\vk\\group\\cover_for_upload.jpg");
+        GetOwnerCoverPhotoUploadServerResponse serverResponse = vkApiClient.photos().getOwnerCoverPhotoUploadServer(groupActor).execute();
+        OwnerCoverUploadResponse uploadResponse = vkApiClient.upload().photoOwnerCover(serverResponse.getUploadUrl(), file).execute();
+
+        return vkApiClient.photos()
+                .saveOwnerCoverPhoto(groupActor , uploadResponse.getPhoto(), uploadResponse.getHash())
                 .execute();
     }
 }
