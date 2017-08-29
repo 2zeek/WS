@@ -66,9 +66,9 @@ public class VkController {
                 .execute();
     }
 
-    @GetMapping(NAMESPACE + "/publicPhotoOnTheWall")
+    @GetMapping(NAMESPACE + "/setPhotoOnTheWall")
     @ResponseBody
-    public PostResponse publicPhotoOnTheWall() throws ClientException, ApiException {
+    public PostResponse setPhotoOnTheWall() throws ClientException, ApiException {
         File file = new File(System.getProperty("user.dir") + "\\upload-dir\\vk\\photo_for_upload.jpg");
         PhotoUpload serverResponse = vkApiClient.photos().getWallUploadServer(userActor).execute();
         WallUploadResponse uploadResponse = vkApiClient.upload().photoWall(serverResponse.getUploadUrl(), file).execute();
@@ -86,9 +86,9 @@ public class VkController {
     }
 
     @ResponseBody
-    @GetMapping(NAMESPACE + "/publicAvatar")
-    public SaveOwnerPhotoResponse publicAvatar() throws ClientException, ApiException {
-        File file = new File(System.getProperty("user.dir") + "\\upload-dir\\vk\\photo_for_upload.jpg");
+    @GetMapping(NAMESPACE + "/setAvatar")
+    public SaveOwnerPhotoResponse setAvatar() throws ClientException, ApiException {
+        File file = new File(System.getProperty("user.dir") + "\\upload-dir\\vk\\user\\photo_for_upload.jpg");
         GetOwnerPhotoUploadServerResponse serverResponse = vkApiClient.photos().getOwnerPhotoUploadServer(userActor).execute();
         WallUploadResponse uploadResponse = vkApiClient.upload().photoWall(serverResponse.getUploadUrl(), file).execute();
 
@@ -106,6 +106,21 @@ public class VkController {
         return vkApiClient.groups()
                 .getMembers(groupActor)
                 .groupId(String.valueOf(GROUP_ID))
+                .execute();
+    }
+
+    @ResponseBody
+    @GetMapping(NAMESPACE + "/setGroupAvatar")
+    public SaveOwnerPhotoResponse setGroupAvatar() throws ClientException, ApiException {
+        File file = new File(System.getProperty("user.dir") + "\\upload-dir\\vk\\group\\photo_for_upload.jpg");
+        GetOwnerPhotoUploadServerResponse serverResponse = vkApiClient.photos().getOwnerPhotoUploadServer(userActor).ownerId(0-GROUP_ID).execute();
+        WallUploadResponse uploadResponse = vkApiClient.upload().photoWall(serverResponse.getUploadUrl(), file).execute();
+
+        return vkApiClient.photos()
+                .saveOwnerPhoto(userActor)
+                .photo(uploadResponse.getPhoto())
+                .hash(uploadResponse.getHash())
+                .server(String.valueOf(uploadResponse.getServer()))
                 .execute();
     }
 }
