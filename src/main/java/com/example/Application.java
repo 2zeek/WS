@@ -31,8 +31,7 @@ public class Application {
         Runnable genPic = () -> {
             try {
                 weatherPicGenerator.generatePic();
-               // vkController.setGroupCover();
-                System.out.println(new Date());
+                vkController.setGroupCover();
             } catch (Exception e) {
                 e.printStackTrace();
             }

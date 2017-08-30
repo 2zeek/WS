@@ -85,7 +85,8 @@ class WeatherPicGenerator {
         BufferedImage combinedWithBack = new BufferedImage(background.getWidth(), background.getHeight(), BufferedImage.TYPE_INT_ARGB);
         Graphics gg = combinedWithBack.getGraphics();
         gg.drawImage(background, 0, 0, null);
-        gg.drawImage(combined, background.getWidth() - combined.getWidth() - 15, 0, null);
+//        gg.drawImage(combined, background.getWidth() - combined.getWidth() - 15, 0, null);
+        gg.drawImage(combined, 215, 0, null);
 
         try {
             ImageIO.write(combinedWithBack, "PNG", new File(System.getProperty("user.dir") + "\\upload-dir\\vk\\group\\cover_for_upload.png"));
