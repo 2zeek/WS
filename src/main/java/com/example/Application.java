@@ -18,6 +18,6 @@ public class Application {
 
     public static void main(String[] args) throws Exception {
         ApplicationContext context = SpringApplication.run(Application.class, args);
-
+        new WeatherPicGenerator();
     }
 }
