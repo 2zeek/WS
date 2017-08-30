@@ -1,6 +1,5 @@
 package com.example;
 
-import com.example.clients.OpenWeatherMapClient;
 import com.example.storage.StorageProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
