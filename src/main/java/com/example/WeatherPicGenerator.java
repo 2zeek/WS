@@ -16,42 +16,50 @@ import static com.example.controllers.MergeImagesController.convertTextToGraphic
 /**
  * Created by Nikolay V. Petrov on 30.08.2017.
  */
-public class WeatherPicGenerator {
+
+class WeatherPicGenerator {
 
     private static OpenWeatherMapClient openWeatherMapClient = new OpenWeatherMapClient();
 
 
-    public WeatherPicGenerator() throws IOException {
+    WeatherPicGenerator() throws IOException {
 
         ObjectNode weatherData = openWeatherMapClient.getWeather();
 
-        Date date = new Date();
         Calendar calendar = GregorianCalendar.getInstance();
-        calendar.setTime(date);
+        calendar.setTime(new Date());
         Integer currentHour = calendar.get(Calendar.HOUR_OF_DAY);
-
-        System.out.println(currentHour);
 
         //String weather = weatherData.get("weather").asText().toLowerCase();
         String weather = "clear";
         String dayTime = currentHour > 6 && currentHour < 20 ? "day" : "night";
         String weatherPicName = weather + "_" + dayTime;
 
-        BufferedImage text = convertTextToGraphic(weatherData.get("temp").asText(), new Font("Arial", Font.PLAIN, 40));
-        BufferedImage icon = Scalr.resize(ImageIO.read(new File( System.getProperty("user.dir") + "\\icons\\oneSet\\" + weatherPicName + ".png")), 100);
+        String tempText = weatherData.get("temp").asDouble() > 0
+                ? "+" + weatherData.get("temp").asText()
+                : "1" + weatherData.get("temp").asText();
 
+        BufferedImage text = convertTextToGraphic(tempText, new Font("Arial", Font.PLAIN, 40));
+        BufferedImage icon = Scalr.resize(ImageIO.read(
+                new File( System.getProperty("user.dir") + "\\icons\\oneSet\\" + weatherPicName + ".png")),
+                100);
         int w = text.getWidth() + icon.getWidth() + 20;
         int h = Math.max(text.getHeight(), icon.getHeight()) + 20;
         BufferedImage combined = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
 
         Graphics g = combined.getGraphics();
         g.drawImage(text, 0, 10, null);
-        g.drawImage(icon, text.getWidth() + 10, 0, null);
+        g.drawImage(icon, text.getWidth() + 10, 10, null);
+        BufferedImage scaledBack = Scalr.resize(
+                ImageIO.read(
+                        new File( System.getProperty("user.dir") + "\\icons\\oneSet\\background_cyan.png")),
+                Scalr.Mode.FIT_EXACT, combined.getWidth(), combined.getHeight());
 
-        // Save as new image
-        ImageIO.write(combined, "PNG", new File(System.getProperty("user.dir") + "\\upload-dir\\weather\\path-to-file.png"));
+        BufferedImage combinedWithBack = new BufferedImage(combined.getWidth(), combined.getHeight(), BufferedImage.TYPE_INT_ARGB);
+        Graphics gg = combinedWithBack.getGraphics();
+        gg.drawImage(scaledBack, 0, 0, null);
+        gg.drawImage(combined, 0, 0, null);
 
-        //write BufferedImage to file
-        System.out.println(weatherData.get("weather").asText().toLowerCase());
+        ImageIO.write(combinedWithBack, "PNG", new File(System.getProperty("user.dir") + "\\upload-dir\\weather\\upload.png"));
     }
 }
