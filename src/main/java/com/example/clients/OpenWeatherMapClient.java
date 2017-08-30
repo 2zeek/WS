@@ -33,7 +33,7 @@ public class OpenWeatherMapClient {
     public ObjectNode getWeather() {
         WeatherResponse weatherResponse = restTemplate.getForObject(server + params, WeatherResponse.class);
         ObjectNode jsonObject = objectMapper.createObjectNode();
-        jsonObject.put("temp", weatherResponse.getMain().getTemp().doubleValue());
+        jsonObject.put("temp", weatherResponse.getMain().getTemp().intValue());
         jsonObject.put("weather", weatherResponse.getWeather().get(0).getMain());
         return jsonObject;
     }

@@ -122,14 +122,12 @@ public class VkController {
                 .execute();
     }
 
-    @ResponseBody
-    @GetMapping(NAMESPACE + "/setGroupCover")
-    public PhotosSaveOwnerCoverPhotoResponse setGroupCover() throws ClientException, ApiException {
-        File file = new File(System.getProperty("user.dir") + "\\upload-dir\\vk\\group\\cover_for_upload.jpg");
+    public void setGroupCover() throws ClientException, ApiException {
+        File file = new File(System.getProperty("user.dir") + "\\upload-dir\\vk\\group\\cover_for_upload.png");
         GetOwnerCoverPhotoUploadServerResponse serverResponse = vkApiClient.photos().getOwnerCoverPhotoUploadServer(groupActor).execute();
         OwnerCoverUploadResponse uploadResponse = vkApiClient.upload().photoOwnerCover(serverResponse.getUploadUrl(), file).execute();
 
-        return vkApiClient.photos()
+        vkApiClient.photos()
                 .saveOwnerCoverPhoto(groupActor , uploadResponse.getPhoto(), uploadResponse.getHash())
                 .execute();
     }
