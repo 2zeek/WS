@@ -8,9 +8,6 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -23,15 +20,11 @@ import static com.example.controllers.MergeImagesController.convertTextToGraphic
 class WeatherPicGenerator {
 
     private static OpenWeatherMapClient openWeatherMapClient = new OpenWeatherMapClient();
-    private final Path rootLocation = Paths.get(System.getProperty("user.dir") + "\\upload-dir\\vk\\group");
+    private final File rootLocation = new File("upload-dir/vk/group");
 
     void generatePic() {
 
-        try {
-            Files.createDirectories(rootLocation);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        rootLocation.mkdirs();
         ObjectNode weatherData = openWeatherMapClient.getWeather();
 
         Calendar calendar = GregorianCalendar.getInstance();
@@ -51,12 +44,12 @@ class WeatherPicGenerator {
         BufferedImage icon = null;
         try {
             icon = Scalr.resize(ImageIO.read(
-                    new File(System.getProperty("user.dir") + "\\icons\\oneSet\\png\\" + weatherPicName + ".png")),
+                    new File("icons/oneSet/png/" + weatherPicName + ".png")),
                     50);
         } catch (IOException e) {
             try {
                 icon = Scalr.resize(ImageIO.read(
-                        new File(System.getProperty("user.dir") + "\\icons\\oneSet\\png\\celsius.png")),
+                        new File("icons/oneSet/png/elsius.png")),
                         50);
             } catch (IOException e1) {
                 e1.printStackTrace();
@@ -73,7 +66,7 @@ class WeatherPicGenerator {
         BufferedImage background = null;
         try {
             background = ImageIO.read(
-                    new File( System.getProperty("user.dir") + "\\icons\\oneSet\\background.jpg"));
+                    new File( "icons/oneSet/background.jpg"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -89,7 +82,7 @@ class WeatherPicGenerator {
         gg.drawImage(combined, 215, 0, null);
 
         try {
-            ImageIO.write(combinedWithBack, "PNG", new File(System.getProperty("user.dir") + "\\upload-dir\\vk\\group\\cover_for_upload.png"));
+            ImageIO.write(combinedWithBack, "PNG", new File("upload-dir/vk/group/cover_for_upload.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }

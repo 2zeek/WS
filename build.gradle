@@ -46,3 +46,14 @@ jar {
         attributes 'Main-Class': 'com.example.Application'
         attributes 'Class-Path': configurations.runtime.files.collect { "lib/$it.name" }.join(' ')    }
 }
+
+distributions {
+    main {
+        baseName = 'WS'
+        contents {
+            from { './' } {
+                include 'icons/**/*.*'
+            }
+        }
+    }
+}
