@@ -40,7 +40,7 @@ public class VkController {
 
     public VkController() {
         Properties properties = new Properties();
-        try (InputStream is = Application.class.getResourceAsStream("/vk-config.properties")) {
+        try (InputStream is = Application.class.getResourceAsStream("/config/vk-config.properties")) {
             properties.load(is);
         } catch (IOException e) {
             throw new IllegalStateException(e);
